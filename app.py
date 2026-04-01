@@ -46,7 +46,7 @@ st.markdown("# Patient Appointment Tracker")
 
 #Login/Registration:
 #I'm thinking u can represent this as two tabs within the page, with login as the default, but it's up to you.
-
+ROLES = {"Patient": "Max"
 
 
 #CREATE: Book Appointments
@@ -64,7 +64,7 @@ if st.session_state['page'] == "Book_Appointment":
     book_now_btn = st.button("Book Now", key="book_now_btn", use_container_width=True)
 
     #if book_now_btn:
-        
+
 
 
 
