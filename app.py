@@ -53,7 +53,12 @@ st.markdown("# Patient Appointment Tracker")
 if st.session_state['page'] == "Book_Appointment":
     st.header("Book Appointment")
 
-    appointment_time = st.date_input("Appointment time")
+    appointment_date = st.date_input("Select Appointment Date")
+    
+    available_times = []
+
+    appointment_time = st.selectbox("Select Appointment Time", ["select time", available_times])
+   
     symptoms = st.text_input("Enter Symptoms", key="symptoms")
 
     book_now_btn = st.button("Book Now", key="book_now_btn", use_container_width=True)
@@ -71,6 +76,7 @@ if st.session_state['page'] == "Book_Appointment":
 #UPDATE: Reschedule Appointments
 if st.session_state['page'] == "Reschedule_Appointments":
     st.header("Reschedule Appointments")
+
 
 #DELETE: Delete Appoinments
 if st.session_state['page'] == "Delete_Appointments":
