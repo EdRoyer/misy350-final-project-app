@@ -46,7 +46,8 @@ st.markdown("# Patient Appointment Tracker")
 
 #Login/Registration:
 #I'm thinking u can represent this as two tabs within the page, with login as the default, but it's up to you.
-ROLES = {"Patient": "Max"
+
+         
 
 
 #CREATE: Book Appointments
