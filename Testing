@@ -6,6 +6,7 @@ import time
 
 st.set_page_config(page_title="Login/Registration", layout="centered")
 
+# ---------- SESSION STATE ----------
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
 
@@ -15,16 +16,20 @@ if "user" not in st.session_state:
 if "role" not in st.session_state:
     st.session_state.role = None
 
+
+# ---------- FILE SETUP ----------
 json_path = Path("users.json")
 
 default_users = [
     {
+        "id": str(uuid.uuid4()),
         "email": "max@patient.com",
         "full_name": "Max Smith",
         "password": "123ssag@43AE",
         "role": "Patient"
     },
     {
+        "id": str(uuid.uuid4()),
         "email": "doctor@hospital.com",
         "full_name": "Roger Craig",
         "password": "2468def@56SR",
@@ -39,6 +44,8 @@ if not json_path.exists():
 with open(json_path, "r") as f:
     users = json.load(f)
 
+
+# ---------- FUNCTIONS ----------
 def save_users():
     with open(json_path, "w") as f:
         json.dump(users, f, indent=4)
@@ -66,6 +73,7 @@ def find_user(email, password):
     return None
 
 
+# ---------- DASHBOARDS ----------
 if st.session_state.logged_in:
 
     if st.session_state.role == "Patient":
@@ -83,6 +91,7 @@ if st.session_state.logged_in:
             st.rerun()
 
 else:
+    # ---------- LOGIN ----------
     st.title("Login / Registration")
 
     st.subheader("Log In")
@@ -126,6 +135,7 @@ else:
                     st.error("An account with that email already exists.")
                 else:
                     new_user = {
+                        "id": str(uuid.uuid4()),
                         "email": new_email,
                         "full_name": new_full_name,
                         "password": new_password,
@@ -137,7 +147,7 @@ else:
                     st.rerun()
 
     st.write("---")
-    #st.dataframe(users)
+    st.dataframe(users)
 
 
 # ---------- SIDEBAR ----------
