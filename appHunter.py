@@ -26,28 +26,32 @@ if "page" not in st.session_state:
 
 
 users = [
-        {
+    {
         "patient": "Max",
         "email": "Max@patient.com",
         "full_name": "Max Smith",
         "password": "123ssag@43AE",
-        "role": "patient",
-        "registered_at": "..."
+        "role": "patient"
+    },
+    {
+        "doctor": "Roger",
+        "email": "doctor@hospital.com",
+        "full_name": "Roger Craig",
+        "password": "2468def@56SR",
+        "role": "Doctor"
     }
-    {"doctor":"Roger"
-     "email": "doctor@"
 ]
 
 json_path = Path("users.json")
 if json_path.exists():
     with open(json_path, "r") as f:
         users = json.load(f)
-if st.session_state["role"] == "instructor":
-    st.markdown("Welcome! This is the instructor Dashboard")
+if st.session_state["role"] == "Patient":
+    st.markdown("Welcome! This is the Patient Appointment Dashboard")
 
 
-elif st.session_state['role'] == "Admin":
-    st.markdown("Welcome! This is the Admin Dashboard")
+elif st.session_state['role'] == "Doctor":
+    st.markdown("Welcome! This is the Doctor Dashboard")
 
     if st.button("Log out", type="primary", use_container_width= True):
         with st.spinner("loggin out..."):
@@ -91,7 +95,7 @@ else:
                     st.error("Invalid credentials")
 
     # --- REGISTRATION ---
-    st.subheader("New Instructor Account")
+    st.subheader("New Patient Account")
     with st.container(border=True):
         new_email = st.text_input("Email", key= "email_register")
         new_password = st.text_input("Password", type="password", key= "password_edit")
@@ -104,7 +108,7 @@ else:
                     "id": str(uuid.uuid4()),
                     "email": new_email,
                     "password": new_password,
-                    "role": "Instructor"
+                    "role": "Doctor"
                 })
                 with open(json_path, "w") as f:
                     json.dump(users,f)
@@ -115,7 +119,7 @@ else:
     st.dataframe(users)
 
 with st.sidebar:
-    st.markdown("Course Manager Sidebar")
+    st.markdown("Account Manager Sidebar")
     if  st.session_state["logged_in"] == True:
         user = st.session_state["user"]
         st.markdown(f"Loged User Email: {user['email']}")
