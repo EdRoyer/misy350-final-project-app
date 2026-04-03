@@ -52,19 +52,45 @@ st.markdown("# Patient Appointment Tracker")
 #CREATE: Book Appointments
 if st.session_state['page'] == "Book_Appointment":
     st.header("Book Appointment")
+    patient_first_name = st.text_input("First Name of Patient")
+    patient_last_name = st.text_input("Last Name of Patient")
 
     appointment_date = st.date_input("Select Appointment Date")
     
+    unavailable_times = []
+
     available_times = []
 
-    appointment_time = st.selectbox("Select Appointment Time", ["select time", available_times])
+    start_time = st.selectbox("Select Appointment Time", ["select time", available_times])
+
+    duration = 
+
+    end_time = start_time + duration
    
     symptoms = st.text_input("Enter Symptoms", key="symptoms")
 
     book_now_btn = st.button("Book Now", key="book_now_btn", use_container_width=True)
 
-    #if book_now_btn:
-    
+    if book_now_btn:
+        new_appointment_id = str(uuid.uuid4())
+        
+        appointments.append(
+            {
+                "appointment_id": new_appointment_id,
+                "patient_first_name": patient_first_name,
+                "patient_last_name": patient_last_name
+                "date": appointment_date,
+                "start_time": appointment_start,
+                "end_time": appointment_end,
+                "symptoms": symptoms
+            }
+        )
+        
+        with json_path.open("w",encoding="utf-8") as f:
+                json.dump(appointments,f)
+            
+        st.success("Appointment Scheduled!")
+
 
 
 
