@@ -1,19 +1,21 @@
 import streamlit as st
 import json
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timedelta
 import uuid
 import time
 
 st.set_page_config("Doctor's Appointments", page_icon=":gem:" , layout="wide", initial_sidebar_state="expanded")
 
-appointments = []
 
 json_path_appointments = Path("appointments.json")
 
 if json_path_appointments.exists():
     with open(json_path_appointments, "r") as f:
-        requests = json.load(f)
+        appointments = json.load(f)
+else:
+    appointments = []
+
 
 #Establishes Login/Registration as default page
 if "page" not in st.session_state:
@@ -52,44 +54,69 @@ st.markdown("# Patient Appointment Tracker")
 #CREATE: Book Appointments
 if st.session_state['page'] == "Book_Appointment":
     st.header("Book Appointment")
-    patient_first_name = st.text_input("First Name of Patient")
-    patient_last_name = st.text_input("Last Name of Patient")
+    patient_first_name = st.text_input("First Name of Patient",key="first_name")
+    patient_last_name = st.text_input("Last Name of Patient",key="last_name")
 
-    appointment_date = st.date_input("Select Appointment Date")
+    selected_date = st.date_input("Select Appointment Date",key="selected_date")
     
     unavailable_times = []
 
     available_times = []
+    start = datetime.strptime("09:00", "%H:%M")
+    end = datetime.strptime("17:00", "%H:%M")
 
-    start_time = st.selectbox("Select Appointment Time", ["select time", available_times])
+    all_times = []
+    current = start
+    while current <= end:
+        all_times.append(current.strftime("%H:%M"))
+        current += timedelta(minutes=30)
 
-    duration = 
+    unavailable_times = []
+    for appointment in appointments:
+        if appointment["appointment_date"] == selected_date.isoformat():
+            unavailable_times.append(appointment["appointment_time"])
+    
+    available_times = []
+    for appointment in all_times:
+        if appointment not in unavailable_times:
+            available_times.append(appointment)
 
-    end_time = start_time + duration
-   
+
+    if not available_times:
+        st.warning("No available times for this date")
+    else:
+        selected_time = st.selectbox("Select a time", available_times, key="selected_time")
+
     symptoms = st.text_input("Enter Symptoms", key="symptoms")
+
 
     book_now_btn = st.button("Book Now", key="book_now_btn", use_container_width=True)
 
     if book_now_btn:
-        new_appointment_id = str(uuid.uuid4())
-        
-        appointments.append(
-            {
-                "appointment_id": new_appointment_id,
-                "patient_first_name": patient_first_name,
-                "patient_last_name": patient_last_name
-                "date": appointment_date,
-                "start_time": appointment_start,
-                "end_time": appointment_end,
-                "symptoms": symptoms
-            }
-        )
-        
-        with json_path.open("w",encoding="utf-8") as f:
-                json.dump(appointments,f)
+        with st.spinner("Booking appointment..."):
+            time.sleep(2)
             
-        st.success("Appointment Scheduled!")
+            new_appointment_id = str(uuid.uuid4())
+            
+            appointments.append(
+                {
+                    "appointment_id": new_appointment_id,
+                    "patient_first_name": patient_first_name,
+                    "patient_last_name": patient_last_name,
+                    "appointment_date": selected_date.isoformat(),
+                    "appointment_time": selected_time,
+                    "symptoms": symptoms
+                }
+            )
+
+            with json_path_appointments.open("w",encoding="utf-8") as f:
+                    json.dump(appointments,f, indent=4)
+            
+            st.success("Appointment Scheduled!")
+
+            time.sleep(2)
+            st.rerun()
+
 
 
 
