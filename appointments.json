@@ -1,18 +1,10 @@
 [
     {
-        "appointment_id": "c41f0ec0-0069-499e-85f3-d234b269f302",
-        "patient_first_name": "Ed",
-        "patient_last_name": "Royer",
-        "appointment_date": "2026-05-21",
-        "appointment_time": "12:00",
-        "symptoms": "Cough"
-    },
-    {
         "appointment_id": "a4ca9439-daaa-4856-9733-988903e3514c",
         "patient_first_name": "Ed",
         "patient_last_name": "Royer",
-        "appointment_date": "2026-05-21",
-        "appointment_time": "09:00",
+        "appointment_date": "2026-04-04",
+        "appointment_time": "10:30",
         "symptoms": "Cough"
     },
     {
@@ -45,14 +37,6 @@
         "patient_last_name": "",
         "appointment_date": "2026-04-04",
         "appointment_time": "11:00",
-        "symptoms": "Cough"
-    },
-    {
-        "appointment_id": "7d83e2e5-d5af-4282-a13b-0020175f3fc3",
-        "patient_first_name": "",
-        "patient_last_name": "",
-        "appointment_date": "2026-04-04",
-        "appointment_time": "12:00",
         "symptoms": "Cough"
     }
 ]

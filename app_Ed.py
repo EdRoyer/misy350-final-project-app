@@ -16,6 +16,15 @@ if json_path_appointments.exists():
 else:
     appointments = []
 
+#Sets up date ranges for use in pages
+start = datetime.strptime("09:00", "%H:%M")
+end = datetime.strptime("17:00", "%H:%M")
+all_times = []
+current = start
+while current <= end:
+    all_times.append(current.strftime("%H:%M"))
+    current += timedelta(minutes=30)
+
 
 #Establishes Login/Registration as default page
 if "page" not in st.session_state:
@@ -59,17 +68,7 @@ if st.session_state['page'] == "Book_Appointment":
 
     selected_date = st.date_input("Select Appointment Date",key="selected_date")
     
-    unavailable_times = []
 
-    available_times = []
-    start = datetime.strptime("09:00", "%H:%M")
-    end = datetime.strptime("17:00", "%H:%M")
-
-    all_times = []
-    current = start
-    while current <= end:
-        all_times.append(current.strftime("%H:%M"))
-        current += timedelta(minutes=30)
 
     unavailable_times = []
     for appointment in appointments:
@@ -118,12 +117,6 @@ if st.session_state['page'] == "Book_Appointment":
             st.rerun()
 
 
-
-
-
-
-
-
 #READ: Appointment Dashboard
 
 
@@ -131,7 +124,75 @@ if st.session_state['page'] == "Book_Appointment":
 if st.session_state['page'] == "Reschedule_Appointments":
     st.header("Reschedule Appointments")
 
+    
+
+    reschedulable_appointments = []
+    for appointment in appointments:
+        reschedulable_appointments.append(appointment["appointment_id"])
+
+    selected_rescheduling = st.selectbox("Select Existing Appointment",reschedulable_appointments,key="selected_rescheduling")
+    
+    new_date = st.date_input("Choose new date",key="new_date")
+    
+    unavailable_times = []
+    for appointment in appointments:
+        if appointment["appointment_date"] == new_date.isoformat():
+            unavailable_times.append(appointment["appointment_time"])
+    
+    available_times = []
+    for appointment in all_times:
+        if appointment not in unavailable_times:
+            available_times.append(appointment)
+
+
+    new_time = st.selectbox("Choose new time",available_times,key="new_time")
+
+    reschedule_appointment_btn = st.button("Reschedule Appointment",key="reschedule_appointment_btn")
+
+    if reschedule_appointment_btn:
+        with st.spinner("Rescheduling appointment..."):
+            time.sleep(2)
+
+            for appointment in appointments:
+                if appointment["appointment_id"] == selected_rescheduling:
+                    appointment["appointment_date"] = new_date.isoformat()
+                    appointment["appointment_time"] = new_time
+                    break
+                
+            st.success("Appointment Rescheduled!")
+                
+            with json_path_appointments.open("w",encoding="utf-8") as f:
+                json.dump(appointments,f, indent=4)
+                
+            time.sleep(2)
+            st.rerun()
+                
+
+
 
 #DELETE: Delete Appoinments
 if st.session_state['page'] == "Delete_Appointments":
     st.header("Delete Appointments")
+
+    cancellable_appointments = []
+    for appointment in appointments:
+        cancellable_appointments.append(appointment["appointment_id"])
+
+    selected_cancellation = st.selectbox("Select Appointment to Cancel",cancellable_appointments)
+
+    cancel_appointment_btn = st.button("Cancel Appointment",key="cancel_appointment_btn")
+
+    if cancel_appointment_btn:
+        with st.spinner("Cancelling appointment..."):
+            time.sleep(2)
+            for appointment in appointments:
+                if appointment["appointment_id"] == selected_cancellation:
+                    appointments.remove(appointment)
+                    break
+            st.success("Appointment Canceled!")
+            with json_path_appointments.open("w",encoding="utf-8") as f:
+                json.dump(appointments,f, indent=4)
+            time.sleep(2)
+            st.rerun()
+
+        
