@@ -10,13 +10,19 @@
         "id": "c60d6ac8-2ed0-4e52-b62c-1101543c3e8c",
         "email": "doctor@hospital.com",
         "full_name": "Roger Craig",
-        "password": "2468def@56SR",
+        "password": "W",
         "role": "Doctor"
     },
     {
         "email": "hunterco@udel.edu",
         "full_name": "Hunter Cohen",
         "password": "Roody",
+        "role": "Patient"
+    },
+    {
+        "email": "edroyer@udel.edu",
+        "full_name": "Edgardo Royer",
+        "password": "A",
         "role": "Patient"
     }
 ]
