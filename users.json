@@ -17,12 +17,14 @@
         "email": "hunterco@udel.edu",
         "full_name": "Hunter Cohen",
         "password": "Roody",
-        "role": "Patient"
+        "role": "Patient",
+        "id": "15d66f40-6339-45b1-8d13-5e00e63f1366"
     },
     {
         "email": "edroyer@udel.edu",
         "full_name": "Edgardo Royer",
         "password": "A",
-        "role": "Patient"
+        "role": "Patient",
+        "id": "87317a14-1941-4546-a850-194674db6c46"
     }
 ]
