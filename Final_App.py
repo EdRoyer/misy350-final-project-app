@@ -221,18 +221,19 @@ def appointment_selectbox(label, appointment_list):
 
 
 def show_appointment_details(appointment, include_email=False):
-    st.markdown("### Appointment for:")
-    st.markdown(
-        f"**Patient:** {appointment['patient_first_name']} {appointment['patient_last_name']}"
-    )
-    st.markdown(f"**Date:** {appointment['appointment_date']}")
-    st.markdown(
-        f"**Time:** {format_time_12hr(appointment['appointment_time'])}"
-    )
-    st.markdown(f"**Symptoms:** {appointment['symptoms']}")
+    with st.container(border=True):
+        st.markdown("### Appointment for:")
+        st.markdown(
+            f"**Patient:** {appointment['patient_first_name']} {appointment['patient_last_name']}"
+        )
+        st.markdown(f"**Date:** {appointment['appointment_date']}")
+        st.markdown(
+            f"**Time:** {format_time_12hr(appointment['appointment_time'])}"
+        )
+        st.markdown(f"**Symptoms:** {appointment['symptoms']}")
 
-    if include_email:
-        st.markdown(f"**Email:** {appointment['email']}")
+        if include_email:
+            st.markdown(f"**Email:** {appointment['email']}")
 
 
 def validate_required_fields(fields):
@@ -297,7 +298,7 @@ def get_ai_response(client, chat_history, context_hint):
     messages = [prompt_message] + chat_history
 
     ai_response = client.chat.completions.create(
-        model="gpt-4.1-mini",
+        model="gpt-4o-mini",
         messages=messages,
         temperature=1
     )
@@ -474,11 +475,15 @@ def show_chatbot_page():
                     context_hint=build_chatbot_context_hint()
                 )
             except Exception as error:
+                st.error(f"FULL OPENAI ERROR: {repr(error)}")
+                print("FULL OPENAI ERROR:", repr(error))
+                time.sleep(10)
+
                 response = (
-                    "I could not reach the OpenAI assistant right now, so I used "
-                    f"the local appointment helper instead. {chatbot_response(prompt)}"
+                "I could not reach the OpenAI assistant right now, so I used "
+                f"the local appointment helper instead. {chatbot_response(prompt)}"
                 )
-                st.warning(f"OpenAI request failed: {error}")
+
         else:
             response = chatbot_response(prompt)
 
@@ -655,6 +660,10 @@ if st.session_state.role == "Doctor":
         with col2:
             with st.container(border=True):
                 st.metric("Total Appointments", len(appointments))
+            with st.container(border=True):
+                st.metric("Next Appointment", str(min((datetime.strptime(appointment["appointment_date"], "%Y-%m-%d").date()
+        for appointment in appointments
+        if datetime.strptime(appointment["appointment_date"], "%Y-%m-%d").date() >= date.today()))))
 
     elif st.session_state.page == "Book_Appointment":
         st.header("Book Appointment")
