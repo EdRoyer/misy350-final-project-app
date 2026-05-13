@@ -272,14 +272,22 @@ def build_prompt(context_hint):
     )
 
 
+
 def get_openai_client():
-    api_key = os.getenv("OPENAI_API_KEY")
+    api_key = None
+
+    try:
+        api_key = st.secrets["OPENAI_API_KEY"]
+    except Exception:
+        pass
+
+    if not api_key:
+        api_key = os.getenv("OPENAI_API_KEY")
 
     if not api_key or OpenAI is None:
         return None
 
     return OpenAI(api_key=api_key)
-
 
 def get_ai_response(client, chat_history, context_hint):
     prompt_message = {
@@ -422,7 +430,7 @@ def show_chatbot_page():
 
     if OpenAI is None:
         st.warning("The openai package is not installed, so the local appointment helper is being used.")
-    elif not os.getenv("OPENAI_API_KEY"):
+    elif not get_openai_client():
         st.warning("OPENAI_API_KEY was not found, so the local appointment helper is being used.")
 
     if "chat_messages" not in st.session_state:
