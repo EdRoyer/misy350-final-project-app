@@ -43,5 +43,23 @@
         "appointment_time": "12:00",
         "symptoms": "cough",
         "email": "hunterco@udel.edu"
+    },
+    {
+        "appointment_id": "2967e2dc-0292-4cff-9202-478247ec267f",
+        "patient_first_name": "Max",
+        "patient_last_name": "Smith",
+        "appointment_date": "2026-05-14",
+        "appointment_time": "11:30",
+        "symptoms": "chills",
+        "email": "max@patient.com"
+    },
+    {
+        "appointment_id": "6fe0f771-75ff-4dd7-b77f-3294d6a58fe6",
+        "patient_first_name": "Max",
+        "patient_last_name": "Smith",
+        "appointment_date": "2026-05-13",
+        "appointment_time": "10:00",
+        "symptoms": "fatigue",
+        "email": "max@patient.com"
     }
 ]

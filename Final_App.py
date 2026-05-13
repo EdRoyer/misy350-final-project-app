@@ -854,6 +854,10 @@ elif st.session_state.role == "Patient":
         with col2:
             with st.container(border=True):
                 st.metric("My Appointments", len(my_appointments))
+            with st.container(border=True):
+                st.metric("Next Appointment", str(min((datetime.strptime(appointment["appointment_date"], "%Y-%m-%d").date()
+                for appointment in appointments
+                if datetime.strptime(appointment["appointment_date"], "%Y-%m-%d").date() >= date.today()))))
 
     elif st.session_state.page == "Book_Appointment":
         st.header("Book Appointment")
