@@ -2,13 +2,5 @@
     {
         "role": "assistant",
         "content": "Hi! I can help you use the appointment manager. What would you like to do?"
-    },
-    {
-        "role": "user",
-        "content": "How many appointments do I have?"
-    },
-    {
-        "role": "assistant",
-        "content": "You currently have 5 visible appointments."
     }
 ]
