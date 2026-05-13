@@ -2,5 +2,21 @@
     {
         "role": "assistant",
         "content": "Hi! I can help you use the appointment manager. What would you like to do?"
+    },
+    {
+        "role": "user",
+        "content": "How do I book an appointment?"
+    },
+    {
+        "role": "assistant",
+        "content": "I could not reach the OpenAI assistant right now, so I used the local appointment helper instead. Use the Book Appointment page from the sidebar. Choose a future date, pick an available time, enter symptoms, then click Book Now."
+    },
+    {
+        "role": "user",
+        "content": "how do i delete an appointment?"
+    },
+    {
+        "role": "assistant",
+        "content": "I could not reach the OpenAI assistant right now, so I used the local appointment helper instead. Use Delete Appointments from the sidebar. Select the appointment, review the details, check the confirmation box, then click Cancel Appointment."
     }
 ]

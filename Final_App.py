@@ -297,7 +297,7 @@ def get_ai_response(client, chat_history, context_hint):
     messages = [prompt_message] + chat_history
 
     ai_response = client.chat.completions.create(
-        model="gpt-5-mini",
+        model="gpt-4.1-mini",
         messages=messages,
         temperature=1
     )
