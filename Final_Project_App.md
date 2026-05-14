@@ -35,10 +35,6 @@
 
 ### 2026-05-10 - Structural Refactor
 
-#What changed: The root app was split into a smaller `app.py`, new shared constants in `constants.py`, and data helpers in `data_store.py`.
-
-#Why it changed: The app needed clearer structure, less repeated logic, and a cleaner separation between UI routing and JSON/data operations.
-
 #Affected layer: UI layer, data access layer, routing/session structure.
 
 ### 2026-05-10 - Feature Analysis Plan Version 2
